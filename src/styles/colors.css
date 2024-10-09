@@ -1,9 +1,9 @@
 /* Default theme (light) */
 :root {
     --bg-color: #fff;
-    --secondary-color: #f3edba;
+    --secondary-color: #ffe8b6;
     --text-color: #000;
-    --main-color: #f1eaa5;
+    --main-color: #854d0e;
 }
 
 /* Dark theme */

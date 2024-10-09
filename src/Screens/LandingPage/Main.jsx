@@ -1,40 +1,72 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import "./Main.css"
 import { Link } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
+import logo from "../../assets/Images/logo/logo.png";
 
 export default function HomePage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false)
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
+  const toggleSubMenu = () => setIsSubMenuOpen(!isSubMenuOpen)
 
   return (
     <div className="homepage">
       <header className="header">
         <nav className="navbar">
           {/* Logo */}
-          <Link href="/" className="logo">Luxe Jewels</Link>
+          <Image
+            src={logo} // Make sure to replace this with your logo image path
+            alt="Bright"
+            className="product-image"
+          />
 
           {/* Centered Nav Items (visible on desktop only) */}
           <div className="nav-items">
-            <Link href="/rings" className="nav-link">Rings</Link>
-            <Link href="/necklaces" className="nav-link">Necklaces</Link>
-            <Link href="/earrings" className="nav-link">Earrings</Link>
+            <Link href="/about-us" className="nav-link">Home</Link>
+            <Link href="/about-us" className="nav-link">About Us</Link>
+
+            {/* Products with Submenu */}
+            <div className="nav-link" onMouseEnter={toggleSubMenu} onMouseLeave={toggleSubMenu}>
+              Products
+              <div className={`submenu ${isSubMenuOpen ? 'open' : ''}`}>
+                <Link href="/rings" className="submenu-link">Rings</Link>
+                <Link href="/necklaces" className="submenu-link">Necklaces</Link>
+                <Link href="/earrings" className="submenu-link">Earrings</Link>
+              </div>
+            </div>
+
+            <Link href="/contact" className="nav-link">Contact Us</Link>
           </div>
 
           {/* Right-side icons and hamburger menu */}
           <div className="icons">
-            <button className="icon-button">
-              <ShoppingCart className="icon" />
-            </button>
-
-            {/* Hamburger Menu for Mobile/Tablet */}
             <button className="icon-button hamburger-menu" onClick={toggleMenu}>
               {isMenuOpen ? <X className="icon" /> : <Menu className="icon" />}
             </button>
           </div>
+
+          {/* Mobile Menu (visible on mobile/tablet) */}
+          {isMenuOpen && (
+            <div className="mobile-menu">
+              <Link href="/about-us" className="mobile-link">Home</Link>
+              <Link href="/about-us" className="mobile-link">About Us</Link>
+              <div className="mobile-link" onClick={toggleSubMenu}>
+                Collections
+                {isSubMenuOpen && (
+                  <div className="mobile-submenu">
+                    <Link href="/rings" className="mobile-submenu-link">Rings</Link>
+                    <Link href="/necklaces" className="mobile-submenu-link">Necklaces</Link>
+                    <Link href="/earrings" className="mobile-submenu-link">Earrings</Link>
+                  </div>
+                )}
+              </div>
+              <Link href="/contact" className="mobile-link">Contact Us</Link>
+            </div>
+          )}
         </nav>
 
         {/* Mobile Menu - visible only when open */}
